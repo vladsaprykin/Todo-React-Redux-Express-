@@ -1,0 +1,21 @@
+.form__input {
+    float: left;
+    width: 90%;
+    margin-top: 25px;
+    height: 25px;
+    outline: none;
+    margin-left: 4%;
+    border-top-style: unset;
+    border-left-style: unset;
+    border-right-style: unset;
+    border-bottom: inset 1px #e4e2e4;
+    font-size: 17px;
+    padding-left: 10px;
+    color: #6d6c6d;
+}
+
+.todo__form {
+    width: 100%;
+    margin: 0 auto;
+    height: 70px;
+}

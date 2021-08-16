@@ -1,0 +1,36 @@
+.todo__bar {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-top: solid 1px #e4e2e4;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 13px;
+}
+.todo__bar__btn-left {
+    cursor: pointer;
+    width: 25%;
+    color: #adacad;
+    text-align: center;
+}
+.todo__bar__btn-center {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.todo__bar__btn-center_filter {
+    padding: 5px;
+    cursor: pointer;
+}
+.todo__bar__btn-right {
+    cursor: pointer;
+    width: 25%;
+    color: #adacad;
+}
+.active-btn {
+    border: 1px solid #e4e2e4;
+    border-radius: 5px;
+}
