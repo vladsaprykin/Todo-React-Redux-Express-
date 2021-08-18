@@ -1,7 +1,7 @@
-import React from "react";
-import { deleteTask, toggleTask } from "../../redux/actions";
-import { useDispatch } from "react-redux";
-import styles from "./.module.css"
+import React from 'react';
+import { deleteTask, toggleTask } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import styles from './.module.css'
 
 const TodoCustomCheckBox = ({ task }) => {
 	const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const TodoCustomCheckBox = ({ task }) => {
 			<input
 			className={styles['custom-check-box']}
 			checked={task.isCompleted}
-			type="checkbox"
+			type='checkbox'
 			onChange={() => handleToggleTask()}
 			id={task._id}
 			/>

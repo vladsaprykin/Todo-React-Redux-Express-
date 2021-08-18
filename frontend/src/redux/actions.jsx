@@ -1,4 +1,4 @@
-import * as types from "./constants";
+import * as types from './constants';
 
 export const createTask = (task) => {
 	return {
@@ -31,6 +31,24 @@ export const clearCompleteTasks = () => {
 export const loadTask = (data) => {
 	return {
 		type: types.LOAD_TASKS,
+		payload: data
+	}
+}
+export const openSignUp = (bool) => {
+	return {
+		type: types.TOGGLE_COMPONENT,
+		payload: bool
+	}
+}
+export const authenticatedUser = (bool) => {
+	return {
+		type: types.USER_AUTHENTICATION,
+		payload: bool
+	}
+}
+export const addUser = (data) => {
+	return {
+		type: types.ADD_INFO_OF_USER,
 		payload: data
 	}
 }

@@ -1,9 +1,9 @@
-import React from "react";
-import { BsFillTrashFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { deleteTask, loadTask } from "../../redux/actions";
-import TodoCustomCheckBox from "../TodoCustomCheckBox";
-import styles from "./.module.css"
+import React from 'react';
+import { BsFillTrashFill } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
+import { deleteTask, loadTask } from '../../redux/actions';
+import TodoCustomCheckBox from '../TodoCustomCheckBox';
+import styles from './.module.css'
 
 const TodoItem = ({task}) => {
 	const dispatch = useDispatch();
@@ -16,13 +16,13 @@ const TodoItem = ({task}) => {
 		if ( 200 <= status && status < 300) dispatch(deleteTask(task._id))
 	}
 	return (
-		<div className={styles["todo__item"]}>
+		<div className={styles['todo__item']}>
 			<TodoCustomCheckBox task={task}/>
-			<span className={styles["todo__item__text"]}>{task.todo}</span>
+			<span className={styles['todo__item__text']}>{task.todo}</span>
 			<BsFillTrashFill
-				color="#c6c4c6"
+				color='#c6c4c6'
 				onClick={() => handleDeleteTask()}
-				cursor="pointer"
+				cursor='pointer'
 			/>
 		</div>
 	)
