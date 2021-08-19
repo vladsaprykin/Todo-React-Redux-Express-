@@ -2,26 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { compose, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { rootReducer } from './redux/rootReducer';
-import { Provider } from 'react-redux'
-import {  Router, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import thunk from 'redux-thunk';
 
-
-const store = createStore(rootReducer, compose(
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-));
+const store = createStore(
+  rootReducer,
+  compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
+);
 export const history = createBrowserHistory();
 
 ReactDOM.render(
-	<Provider store={store}>
-		<Router history={history}>
-			<React.StrictMode>
-				<App />
-			</React.StrictMode>
-		</Router>
-	</Provider>,
-	document.getElementById('root'),
+  <Provider store={store}>
+    <Router history={history}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Router>
+  </Provider>,
+  document.getElementById('root'),
 );

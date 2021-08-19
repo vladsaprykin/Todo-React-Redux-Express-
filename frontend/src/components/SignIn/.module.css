@@ -1,118 +1,117 @@
 .login-block {
-    display: flex;
-    width: 400px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 80px 55px 30px 55px;
-    margin: 0 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 80px 55px 30px;
+  margin: 0 10px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-block__form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form__title {
-    display: block;
-    font-size: 30px;
-    color: #4b2354;
-    line-height: 1.2;
-    text-align: center;
-    padding-bottom: 30px;
+  display: block;
+  font-size: 30px;
+  color: #4b2354;
+  line-height: 1.2;
+  text-align: center;
+  padding-bottom: 30px;
 }
 
 .form__validate-input {
-    width: 100%;
-    position: relative;
-    background-color: #fff;
-    margin-bottom: 20px;
-    box-shadow: 0px 0px 10px 4px rgb(0 0 255 / 20%);
-    border-radius: 20px;
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px 4px rgb(0 0 255 / 20%);
+  border-radius: 20px;
 }
 
 .form__validate-input > input {
-    font-size: 16px;
-    width: 100%;
-    border: none;
-    height: 40px;
-    border-radius: 20px;
-    padding: 0 20px;
-    box-sizing: border-box;
+  font-size: 16px;
+  width: 100%;
+  border: none;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 .form__validate-input > input:focus-visible {
-    outline: none;
+  outline: none;
 }
 .form__error {
-    color: red;
-    margin-bottom: 0;
-    font-size: 13px;
+  color: red;
+  margin-bottom: 0;
+  font-size: 13px;
 }
 .form__submit {
-    width: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .form__submit button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    min-width: 160px;
-    height: 50px;
-    background-color: #bd59d4;
-    border-radius: 25px;
-    font-size: 14px;
-    color: #fff;
-    text-transform: uppercase;
-    -webkit-transition: all .4s;
-    -o-transition: all .4s;
-    -moz-transition: all .4s;
-    transition: all .4s;
-    box-shadow: 0 10px 30px 0 rgba(189,89,212,.5);
-    -moz-box-shadow: 0 10px 30px 0 rgba(189,89,212,.5);
-    -webkit-box-shadow: 0 10px 30px 0 rgba(189,89,212,.5);
-    -o-box-shadow: 0 10px 30px 0 rgba(189,89,212,.5);
-    -ms-box-shadow: 0 10px 30px 0 rgba(189,89,212,.5);
-    border: none;
-    cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 160px;
+  height: 50px;
+  background-color: #bd59d4;
+  border-radius: 25px;
+  font-size: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -moz-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -o-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  -ms-box-shadow: 0 10px 30px 0 rgba(189, 89, 212, 0.5);
+  border: none;
+  cursor: pointer;
 }
 .form__submit button:hover {
-    background-color: #4b2354;
-    transition: all .4s;
+  background-color: #4b2354;
+  transition: all 0.4s;
 }
 .form__text-login-with {
-    margin-top: 40px;
-    font-size: 16px;
-    color: #999;
-    text-align: center;
+  margin-top: 40px;
+  font-size: 16px;
+  color: #999;
+  text-align: center;
 }
 .form__login-with {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 .form__login-with a {
-    margin: 0 5px;
+  margin: 0 5px;
 }
 .form__text-signUp button {
-    background-color: #ffffff;
-    border: none;
-    cursor: pointer;
-    outline: none;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }
 .form__text-signUp button:hover {
-    text-shadow: 3px 3px 4px black;
+  text-shadow: 3px 3px 4px black;
 }
