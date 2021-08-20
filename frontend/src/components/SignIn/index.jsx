@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { openSignUp, signInUserThunkCreator } from '../../redux/actions';
+import { addUser, openSignUp, signInUserThunkCreator } from '../../redux/actions';
 import { Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as VkSvg } from '../../assets/login/vk.svg';
-import { ReactComponent as FacebookSvg } from '../../assets/login/facebook.svg';
+import { ReactComponent as GoogleSvg } from '../../assets/login/google.svg';
 import { regExpMail, regExpPass } from '../../helpers/utils';
 
 const SignIn = () => {
@@ -32,6 +32,21 @@ const SignIn = () => {
   useEffect(() => {
     if (auth === true) history.push('/todo', { update: true });
   }, [auth]);
+  useEffect(() => {
+    const _onInit = (auth2) => {
+      console.log('init OK', auth2);
+    };
+    const _onError = (err) => {
+      console.log('error', err);
+    };
+    window.gapi.load('auth2', function () {
+      window.gapi.auth2
+        .init({
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        })
+        .then(_onInit, _onError);
+    });
+  }, []);
   const handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -76,6 +91,29 @@ const SignIn = () => {
       },
     }));
   };
+  const signInGoogle = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signIn().then((googleUser) => {
+      // метод возвращает объект пользователя
+      // где есть все необходимые нам поля
+      const profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // не посылайте подобную информацию напрямую, на ваш сервер!
+      console.log('Full Name: ' + profile.getName());
+      console.log('Given Name: ' + profile.getGivenName());
+      console.log('Family Name: ' + profile.getFamilyName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+
+      // токен
+      const id_token = googleUser.getAuthResponse().id_token;
+      console.log('ID Token: ' + id_token);
+      const dataGoogle = {
+        username: profile.getGivenName(),
+        email: profile.getEmail(),
+      };
+      dispatch(addUser(dataGoogle));
+    });
+  };
   return (
     <div className={styles['login-block']}>
       <form className={styles['login-block__form']} method="POST" onSubmit={handleSubmit}>
@@ -116,13 +154,13 @@ const SignIn = () => {
       <div className={styles['form__text-login-with']}>Or login with</div>
       <div className={styles['form__login-with']}>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#">
+        <button>
           <VkSvg />
-        </a>
+        </button>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#">
-          <FacebookSvg />
-        </a>
+        <button onClick={signInGoogle}>
+          <GoogleSvg />
+        </button>
       </div>
       <div className={styles['form__text-signUp']}>
         <button

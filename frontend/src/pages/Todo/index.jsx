@@ -11,6 +11,7 @@ const Todo = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTasksThunkCreator());
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [filter, setFilter] = useState(0);
   const filteredTasks = useMemo(() => {

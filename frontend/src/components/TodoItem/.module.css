@@ -17,3 +17,6 @@
   text-align: left;
   padding-bottom: 5px;
 }
+.todo__item svg {
+  flex-shrink: 0;
+}

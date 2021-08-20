@@ -7,7 +7,7 @@ const initialState = {
   },
   signUp: {
     isOpenModal: false,
-    title: '',
+    type: '',
     content: '',
   },
 };
@@ -26,7 +26,7 @@ export const requestSignReducer = (state = initialState, action) => {
         ...state,
         signUp: {
           isOpenModal: true,
-          title: 'Error',
+          type: 'Error',
           content: action.payload,
         },
       };
@@ -35,7 +35,7 @@ export const requestSignReducer = (state = initialState, action) => {
         ...state,
         signUp: {
           isOpenModal: true,
-          title: 'Congratulations',
+          type: 'Congratulations',
           content: 'Account created',
         },
       };
@@ -46,5 +46,4 @@ export const requestSignReducer = (state = initialState, action) => {
     default:
       return state;
   }
-  return state;
 };

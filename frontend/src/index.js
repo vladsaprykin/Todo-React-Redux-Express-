@@ -10,10 +10,7 @@ import { createBrowserHistory } from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 
-const store = createStore(
-  rootReducer,
-  compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
-);
+const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
 export const history = createBrowserHistory();
 
 ReactDOM.render(

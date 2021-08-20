@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createTask, setTaskThunkCreator } from '../../redux/actions';
+import { setTaskThunkCreator } from '../../redux/actions';
 import styles from './.module.css';
 
 const TodoForm = () => {

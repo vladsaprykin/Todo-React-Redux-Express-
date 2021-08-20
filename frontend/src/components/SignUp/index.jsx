@@ -10,6 +10,7 @@ import { regExpMail, regExpPass, regExpUserName } from '../../helpers/utils';
 const SignUp = () => {
   const dispatch = useDispatch();
   const dataModal = useSelector((state) => state.requestError.signUp);
+  const signUpOpen = useSelector((state) => state.signUp.signUpOpen);
   const [dataForm, setDataForm] = useState({
     username: '',
     email: '',
@@ -51,7 +52,7 @@ const SignUp = () => {
     }));
     return userNameResult && emailResult && passwordResult;
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     const data = {
@@ -63,6 +64,7 @@ const SignUp = () => {
   };
   const handleModal = () => {
     dispatch(removeRequestError());
+    if (signUpOpen && dataModal.type !== 'Error') return dispatch(openSignUp(false));
   };
   return (
     <div className={styles['sign-up-block']}>
@@ -74,7 +76,7 @@ const SignUp = () => {
         aria-labelledby="example-modal-sizes-title-sm"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">{dataModal.title}</Modal.Title>
+          <Modal.Title id="example-modal-sizes-title-sm">{dataModal.type}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{dataModal.content}</Modal.Body>
       </Modal>
