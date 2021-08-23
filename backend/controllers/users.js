@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const configJwt = require("../config/jwtConfig");
 
-exports.get_user = async function (req, res, next) {
+exports.get_user = async (req, res, next) => {
   try {
     const email = req.body.email;
     const passwordEnteredByUser = req.body.password;
@@ -34,7 +34,7 @@ exports.get_user = async function (req, res, next) {
     res.send({ error: "Server error" });
   }
 };
-exports.add_user = async function (req, res, next) {
+exports.add_user = async (req, res, next) => {
   const username = req.body.username;
   const email = req.body.email;
   const passwordFromUser = req.body.password;
@@ -51,14 +51,15 @@ exports.add_user = async function (req, res, next) {
     email,
     password: passwordToSave,
   });
-  await user.save(function (err, result) {
-    if (err) {
-      return next(err);
-    }
-    res.send(result);
-  });
+  try {
+    const result = await user.save();
+    res.send("Add user");
+  } catch (e) {
+    console.log(e);
+    res.send({ error: "Server error" });
+  }
 };
-exports.get_user_token = async function (req, res, next) {
+exports.get_user_token = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.user._id });
     const token = jwt.sign({ _id: user._id }, configJwt.secretKey, {

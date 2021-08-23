@@ -120,7 +120,8 @@ export const toggleTaskThunkCreator = (task) => {
         body: JSON.stringify({ isCompleted: !task.isCompleted }),
       });
       const status = response.status;
-      if (200 <= status && status < 300) dispatch(toggleTask(task._id));
+      const result = await response.json();
+      if (200 <= status && status < 300) dispatch(toggleTask(result._id));
     } catch (e) {
       console.log(e);
     }
@@ -134,7 +135,8 @@ export const deleteTaskThunkCreator = (id) => {
         mode: 'cors',
       });
       const status = response.status;
-      if (200 <= status && status < 300) dispatch(deleteTask(id));
+      const result = await response.json();
+      if (200 <= status && status < 300) dispatch(deleteTask(result._id));
     } catch (e) {
       console.log(e);
     }
@@ -215,9 +217,9 @@ export const singUpUserThunkCreator = (data) => {
         body: JSON.stringify(data),
       });
       const status = response.status;
-      const user = await response.json();
+      const dataResponse = await response.json();
       if (status === 400) {
-        dispatch(addErrorSignUpRequest(user.error));
+        dispatch(addErrorSignUpRequest(dataResponse.error));
         return;
       }
       if (200 <= status && status < 300) {

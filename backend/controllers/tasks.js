@@ -1,47 +1,64 @@
-const Task = require('../models/task');
+const Task = require("../models/task");
 
-exports.task_create = function (req, res, next) {
-	const task = new Task(
-		{
-			todo: req.body.todo
-		}
-	);
-	task.save(function (err, result) {
-		if (err) {
-			return next(err);
-		}
-		res.send(result)
-	})
-};
-exports.task_getAll = function (req, res, next) {
-    Task.find({}, function (err, tasks) {
-        if (err) return next(err)
-        res.send(tasks)
-    })
-};
-exports.task_update = function (req, res, next) {
-    Task.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, task) {
-        if (err) return next(err);
-        res.send('Update');
+exports.task_create = async (req, res, next) => {
+  try {
+    const task = new Task({
+      todo: req.body.todo,
+      isCompleted: false,
     });
+    const result = await task.save();
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
+};
+exports.task_getAll = async (req, res, next) => {
+  try {
+    const tasks = await Task.find({});
+    res.send(tasks);
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
+};
+exports.task_update = async (req, res, next) => {
+  try {
+    const result = await Task.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
 };
 
-exports.task_delete = function (req, res, next) {
-    Task.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
-        res.send('Deleted successfully!');
-    })
+exports.task_delete = async (req, res, next) => {
+  try {
+    const result = await Task.findByIdAndRemove(req.params.id);
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
 };
-exports.tasks_setCompleted = function (req, res, next) {
-	Task.updateMany({}, {isCompleted: true},{}, function (err){
-		if (err) return next(err);
-		res.send('all Completed');
-	})
+exports.tasks_setCompleted = async (req, res, next) => {
+  try {
+    const result = await Task.updateMany({}, { isCompleted: true });
+    res.send("all Completed");
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
 };
 
-exports.tasks_bulk_delete = function (req, res, next) {
-	Task.deleteMany({isCompleted: true}, function (err) {
-		if (err) return next(err);
-		res.send('Deleted successfully!');
-	})
+exports.tasks_bulk_delete = async (req, res, next) => {
+  try {
+    const result = await Task.deleteMany({ isCompleted: true });
+    res.send("Deleted successfully!");
+  } catch (e) {
+    console.log(e);
+    res.status(401).json({ message: "Server error" });
+  }
 };
