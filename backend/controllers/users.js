@@ -52,8 +52,8 @@ exports.add_user = async (req, res, next) => {
     password: passwordToSave,
   });
   try {
-    const result = await user.save();
-    res.send("Add user");
+    await user.save();
+    res.send({ done: "add user" });
   } catch (e) {
     console.log(e);
     res.send({ error: "Server error" });

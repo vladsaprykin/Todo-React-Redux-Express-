@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCompletedTasksThunkCreator, completeAllTasksThunkCreator } from '../../redux/actions';
+import { completeAllTasks, deleteCompletedTasks } from '../../redux/todo/action';
 import styles from './.module.css';
-
+import { useHistory } from 'react-router-dom';
 const classNames = require('classnames');
 
 const TodoBar = ({ filter, onChangeFilter }) => {
+  const history = useHistory();
   const btnCenterFilter = [
     { text: 'All', count: 0 },
     { text: 'ToDo', count: 1 },
@@ -17,10 +18,14 @@ const TodoBar = ({ filter, onChangeFilter }) => {
     return tasks.filter((item) => !item.isCompleted).length;
   }, [tasks]);
   const handleCompleteAllTasks = () => {
-    dispatch(completeAllTasksThunkCreator());
+    dispatch(completeAllTasks());
   };
   const handleClearCompleteTasks = () => {
-    dispatch(clearCompletedTasksThunkCreator());
+    dispatch(deleteCompletedTasks());
+  };
+  const changeFilter = (count) => {
+    history.push(`/todo?filter=${count}`);
+    onChangeFilter(count);
   };
   return (
     <div className={styles['todo__bar']}>
@@ -35,7 +40,7 @@ const TodoBar = ({ filter, onChangeFilter }) => {
               className={classNames(styles['todo__bar__btn-center_filter'], {
                 [styles['active-btn']]: filter === item.count,
               })}
-              onClick={() => onChangeFilter(item.count)}
+              onClick={() => changeFilter(item.count)}
             >
               {item.text}
             </div>

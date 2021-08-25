@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../redux/user/action';
 
 function PrivateRoute({ children, ...rest }) {
-  const auth = useSelector((state) => state.user.authenticated);
+  const { authenticated, isLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    dispatch(getUser(token));
+  }, []);
+  if (isLoading)
+    return (
+      <Route {...rest}>
+        {' '}
+        <div>loading</div>{' '}
+      </Route>
+    );
   return (
+    // <Route
+    //   {...rest}
+    //   render={({ location }) =>
+    //     authenticated && !isLoading ? (
+    //       children
+    //     ) : (
+    //       <>
+    //         <Redirect
+    //           to={{
+    //             pathname: '/login',
+    //             state: { from: location },
+    //           }}
+    //         />
+    //       </>
+    //     )
+    //   }
+    // />
     <Route
       {...rest}
       render={({ location }) =>
-        auth ? (
-          children
+        !isLoading ? (
+          authenticated && !isLoading ? (
+            children
+          ) : (
+            <>
+              <Redirect
+                to={{
+                  pathname: '/login',
+                  state: { from: location },
+                }}
+              />
+            </>
+          )
         ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location },
-            }}
-          />
+          <div>loading</div>
         )
       }
     />

@@ -3,7 +3,7 @@ const users_controller = require("../controllers/users");
 var router = express.Router();
 const authMiddleware = require("../middleWare/auth.middleware");
 
-router.post("/", users_controller.get_user);
+router.post("/login/", users_controller.get_user);
 router.post("/create/", users_controller.add_user);
-router.get("/auth", authMiddleware, users_controller.get_user_token);
+router.post("/auth/", authMiddleware, users_controller.get_user_token);
 module.exports = router;

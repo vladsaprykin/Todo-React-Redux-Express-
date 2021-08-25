@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import styles from './.module.css';
 import { GiVulture, GiAquarium, GiCrocJaws, GiDimetrodon } from 'react-icons/gi';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
-import { openSignUp, removeRequestError, singUpUserThunkCreator } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Modal } from 'react-bootstrap';
+import { openSignUp } from '../../redux/toggleComponentSignUp/action';
+import { createUser } from '../../redux/user/action';
+import { useDispatch } from 'react-redux';
 import { regExpMail, regExpPass, regExpUserName } from '../../helpers/utils';
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const dataModal = useSelector((state) => state.requestError.signUp);
-  const signUpOpen = useSelector((state) => state.signUp.signUpOpen);
   const [dataForm, setDataForm] = useState({
     username: '',
     email: '',
@@ -60,26 +58,11 @@ const SignUp = () => {
       email: dataForm.email,
       password: dataForm.password,
     };
-    dispatch(singUpUserThunkCreator(data));
+    dispatch(createUser(data));
   };
-  const handleModal = () => {
-    dispatch(removeRequestError());
-    if (signUpOpen && dataModal.type !== 'Error') return dispatch(openSignUp(false));
-  };
+
   return (
     <div className={styles['sign-up-block']}>
-      <Modal
-        size="sm"
-        show={dataModal.isOpenModal}
-        onHide={handleModal}
-        centered={true}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">{dataModal.type}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{dataModal.content}</Modal.Body>
-      </Modal>
       <form action="#" className={styles['form']} onSubmit={handleSubmit}>
         <div className={styles['form__title']}>Sign UP</div>
         <div className={styles['form__validate-input']}>

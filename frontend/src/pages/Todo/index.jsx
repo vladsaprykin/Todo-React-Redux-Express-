@@ -4,18 +4,21 @@ import TodoForm from '../../components/TodoForm';
 import TodoBar from '../../components/TodoBar';
 import TodoItem from '../../components/TodoItem';
 import styles from './.module.css';
-import { getTasksThunkCreator } from '../../redux/actions';
+import { getTasks } from '../../redux/todo/action';
+import { useHistory } from 'react-router-dom';
+import { Loader } from '../../components/Loader';
 
 const Todo = () => {
-  const tasks = useSelector((state) => state.todo.tasks);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const { tasks, isLoading } = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getTasksThunkCreator());
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getTasks());
   }, []);
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState(parseInt(params.get('filter')));
   const filteredTasks = useMemo(() => {
-    if (filter === 0) return tasks;
+    if (!filter) return tasks;
     return tasks.filter(({ isCompleted }) => (filter === 2 ? isCompleted : !isCompleted));
   }, [tasks, filter]);
   return (
@@ -24,14 +27,20 @@ const Todo = () => {
         <h1 className="heading">Your todo list</h1>
         <div className={styles['block-todo']}>
           <TodoForm />
-          {!!tasks.length && (
+          {isLoading ? (
+            <Loader />
+          ) : (
             <>
-              <div className={styles['todo__items']}>
-                {filteredTasks.map((task, index) => (
-                  <TodoItem task={task} index={index} key={task._id} />
-                ))}
-              </div>
-              <TodoBar filter={filter} onChangeFilter={(value) => setFilter(value)} />
+              {!!tasks.length && (
+                <>
+                  <div className={styles['todo__items']}>
+                    {filteredTasks.map((task, index) => (
+                      <TodoItem task={task} index={index} key={task._id} />
+                    ))}
+                  </div>
+                  <TodoBar filter={filter} onChangeFilter={(value) => setFilter(value)} />
+                </>
+              )}
             </>
           )}
         </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { logOutUser } from '../../redux/actions';
+import { logOutUser } from '../../redux/user/action';
 
 const WindowAuth = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const logOut = () => {
-    if (window.gapi.auth2.getAuthInstance().isSignedIn.Sd === true) {
+    if (window.gapi?.auth2?.getAuthInstance().isSignedIn.Sd === true) {
       const auth2 = window.gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setTaskThunkCreator } from '../../redux/actions';
+import { createTask } from '../../redux/todo/action';
 import styles from './.module.css';
 
 const TodoForm = () => {
@@ -11,7 +11,7 @@ const TodoForm = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(setTaskThunkCreator(valueInput));
+    dispatch(createTask({ todo: valueInput }));
     setValueInput('');
   };
   return (

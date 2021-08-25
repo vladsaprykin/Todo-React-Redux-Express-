@@ -1,12 +1,12 @@
 import React from 'react';
-import { toggleTaskThunkCreator } from '../../redux/actions';
+import { toggleTask } from '../../redux/todo/action';
 import { useDispatch } from 'react-redux';
 import styles from './.module.css';
 
 const TodoCustomCheckBox = ({ task }) => {
   const dispatch = useDispatch();
   const handleToggleTask = () => {
-    dispatch(toggleTaskThunkCreator(task));
+    dispatch(toggleTask(task));
   };
   return (
     <>

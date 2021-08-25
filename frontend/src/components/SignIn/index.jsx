@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from './.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser, openSignUp, signInUserThunkCreator } from '../../redux/actions';
-import { Alert } from 'react-bootstrap';
+import { loginUser } from '../../redux/user/action';
+import { openSignUp } from '../../redux/toggleComponentSignUp/action';
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as VkSvg } from '../../assets/login/vk.svg';
 import { ReactComponent as GoogleSvg } from '../../assets/login/google.svg';
 import { regExpMail, regExpPass } from '../../helpers/utils';
+import * as types from '../../redux/user/constants';
 
 const SignIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const requestError = useSelector((state) => state.requestError.signIn);
-  const auth = useSelector((state) => state.user.authenticated);
+  const { authenticated, isLoading } = useSelector((state) => state.user);
   const [dataForm, setDataForm] = useState({
     email: '',
     password: '',
@@ -30,8 +30,8 @@ const SignIn = () => {
     }));
   }, [dataForm.emailValid, dataForm.passwordValid]);
   useEffect(() => {
-    if (auth === true) history.push('/todo', { update: true });
-  }, [auth]);
+    if (authenticated && !isLoading) history.push('/todo?filter=0');
+  }, [authenticated]);
   useEffect(() => {
     const _onInit = (auth2) => {
       console.log('init OK', auth2);
@@ -64,7 +64,7 @@ const SignIn = () => {
       email: dataForm.email,
       password: dataForm.password,
     };
-    dispatch(signInUserThunkCreator(data));
+    dispatch(loginUser(data));
   };
   const validateField = (fieldName, value) => {
     const fieldValidationErrors = dataForm.formErrors;
@@ -108,10 +108,15 @@ const SignIn = () => {
       const id_token = googleUser.getAuthResponse().id_token;
       console.log('ID Token: ' + id_token);
       const dataGoogle = {
-        username: profile.getGivenName(),
-        email: profile.getEmail(),
+        user: {
+          username: profile.getGivenName(),
+          email: profile.getEmail(),
+        },
       };
-      dispatch(addUser(dataGoogle));
+      dispatch({
+        type: types.LOGIN_USER_SUCCESS,
+        payload: dataGoogle,
+      });
     });
   };
   return (
@@ -144,7 +149,6 @@ const SignIn = () => {
             onChange={handleUserInput}
           />
         </div>
-        {requestError.error && <Alert variant="danger">{requestError.content}</Alert>}
         <div className={styles['form__submit']}>
           <button disabled={!dataForm.formValid} type="submit">
             Sign In
