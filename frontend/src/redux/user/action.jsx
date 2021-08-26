@@ -34,7 +34,6 @@ export const loginUser = (dataUser) => async (dispatch) => {
       type: types.LOGIN_USER_START,
     });
     const data = await loginUserService(dataUser);
-    if ('error' in data) throw data;
     return dispatch({
       type: types.LOGIN_USER_SUCCESS,
       payload: data,
@@ -53,7 +52,6 @@ export const createUser = (dataUser) => {
         type: types.CREATE_USER_START,
       });
       const data = await createUserService(dataUser);
-      if ('error' in data) throw data;
       return dispatch({
         type: types.CREATE_USER_SUCCESS,
         payload: data,

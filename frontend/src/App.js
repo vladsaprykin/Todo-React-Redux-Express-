@@ -15,7 +15,7 @@ function App() {
           <WindowAuth />
           <Todo />
         </PrivateRoute>
-        <Redirect from="/login*" to="/login" />
+        <Redirect from="/" to="/login" />
       </Switch>
     </div>
   );

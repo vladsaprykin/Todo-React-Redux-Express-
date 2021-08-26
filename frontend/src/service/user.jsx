@@ -1,7 +1,7 @@
 import API from './ApiService';
 
 export const getUserService = async (token) => {
-  const data = await API.post('users/auth', { token: token });
+  const data = await API.get('users/auth', { token: token });
   return data;
 };
 export const loginUserService = async (dataUser) => {

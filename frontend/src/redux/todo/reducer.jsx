@@ -32,7 +32,7 @@ export const tasksReducer = (state = initialState, action) => {
           return item;
         }),
       };
-    case types.DELETE_COMPLETE_TASKS_SUCCESS:
+    case types.DELETE_COMPLETED_TASKS_SUCCESS:
       return {
         ...state,
         tasks: state.tasks.filter((item) => !item.isCompleted),

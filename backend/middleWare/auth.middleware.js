@@ -6,11 +6,16 @@ module.exports = (req, res, next) => {
     return next();
   }
   try {
-    const token = req.body.token;
+    const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Auth error" });
     }
-    const decoded = jwt.verify(token, configJwt.secretKey);
+    let decoded;
+    try {
+      decoded = jwt.verify(token, configJwt.secretKey);
+    } catch (e) {
+      return res.status(401).json({ message: "Auth error" });
+    }
     req.user = decoded;
     next();
   } catch (e) {

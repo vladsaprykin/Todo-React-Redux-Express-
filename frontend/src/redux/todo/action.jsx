@@ -7,7 +7,7 @@ import {
   getTasksService,
   toggleTaskService,
 } from '../../service/task';
-import { DELETE_COMPLETE_TASKS_START } from './constants';
+import { LOGIN_USER_ERROR, LOGOUT_USER } from '../user/constants';
 
 export const getTasks = () => async (dispatch) => {
   try {
@@ -20,6 +20,15 @@ export const getTasks = () => async (dispatch) => {
       payload: data,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
       type: types.LOAD_TASKS_ERROR,
       payload: e,
@@ -37,6 +46,15 @@ export const createTask = (task) => async (dispatch) => {
       payload: data,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
       type: types.CREATE_TASK_ERROR,
       payload: e,
@@ -54,6 +72,15 @@ export const toggleTask = (task) => async (dispatch) => {
       payload: data._id,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
       type: types.TOGGLE_TASK_ERROR,
       payload: e,
@@ -71,6 +98,15 @@ export const deleteTask = (id) => async (dispatch) => {
       payload: data._id,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
       type: types.DELETE_TASK_ERROR,
       payload: e,
@@ -87,6 +123,15 @@ export const completeAllTasks = () => async (dispatch) => {
       type: types.COMPLETE_ALL_TASKS_SUCCESS,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
       type: types.COMPLETE_ALL_TASKS_ERROR,
       payload: e,
@@ -96,15 +141,24 @@ export const completeAllTasks = () => async (dispatch) => {
 export const deleteCompletedTasks = () => async (dispatch) => {
   try {
     dispatch({
-      type: types.DELETE_COMPLETE_TASKS_START,
+      type: types.DELETE_COMPLETED_TASKS_START,
     });
     const data = await deleteCompletedTasksService();
     return dispatch({
-      type: types.DELETE_COMPLETE_TASKS_SUCCESS,
+      type: types.DELETE_COMPLETED_TASKS_SUCCESS,
     });
   } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
     return dispatch({
-      type: types.DELETE_COMPLETE_TASKS_ERROR,
+      type: types.DELETE_COMPLETED_TASKS_ERROR,
       payload: e,
     });
   }

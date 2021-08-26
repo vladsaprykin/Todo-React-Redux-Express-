@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../redux/user/action';
+import { getCookie } from '../../helpers/utils';
 
 function PrivateRoute({ children, ...rest }) {
   const { authenticated, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    dispatch(getUser(token));
+    dispatch(getUser(getCookie('token')));
   }, []);
   if (isLoading)
     return (
@@ -18,23 +18,6 @@ function PrivateRoute({ children, ...rest }) {
       </Route>
     );
   return (
-    // <Route
-    //   {...rest}
-    //   render={({ location }) =>
-    //     authenticated && !isLoading ? (
-    //       children
-    //     ) : (
-    //       <>
-    //         <Redirect
-    //           to={{
-    //             pathname: '/login',
-    //             state: { from: location },
-    //           }}
-    //         />
-    //       </>
-    //     )
-    //   }
-    // />
     <Route
       {...rest}
       render={({ location }) =>

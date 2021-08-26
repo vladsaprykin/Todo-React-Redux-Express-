@@ -1,4 +1,4 @@
-import { urlServer } from '../helpers/utils';
+import { getCookie, urlServer } from '../helpers/utils';
 
 class API {
   async post(route, data) {
@@ -8,14 +8,16 @@ class API {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Bearer ${getCookie('token')}`,
         },
         body: JSON.stringify(data),
       });
       const dataServer = await response.json();
-      if (response.status >= 300) throw dataServer;
+      if (response.status === 401) throw { status: 401, error: 'Session expired, please re-login to your account' };
+      if (response.status >= 400) throw dataServer;
       return dataServer;
     } catch (e) {
-      return e;
+      throw e;
     }
   }
   async get(route) {
@@ -23,12 +25,16 @@ class API {
       const response = await fetch(`${urlServer}/${route}/`, {
         method: 'GET',
         mode: 'cors',
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
       });
       const dataServer = await response.json();
-      if (response.status >= 300) throw dataServer;
+      if (response.status === 401) throw { status: 401, error: 'Session expired, please re-login to your account' };
+      if (response.status >= 400) throw dataServer;
       return dataServer;
     } catch (e) {
-      return e;
+      throw e;
     }
   }
   async delete(route) {
@@ -36,12 +42,16 @@ class API {
       const response = await fetch(`${urlServer}/${route}/`, {
         method: 'DELETE',
         mode: 'cors',
+        headers: {
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
       });
       const dataServer = await response.json();
-      if (response.status >= 300) throw dataServer;
+      if (response.status === 401) throw { status: 401, error: 'Session expired, please re-login to your account' };
+      if (response.status >= 400) throw dataServer;
       return dataServer;
     } catch (e) {
-      return e;
+      throw e;
     }
   }
   async put(route, data) {
@@ -51,30 +61,35 @@ class API {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Bearer ${getCookie('token')}`,
         },
         body: JSON.stringify(data),
       });
       const dataServer = await response.json();
-      if (response.status >= 300) throw dataServer;
+      if (response.status === 401) throw { status: 401, error: 'Session expired, please re-login to your account' };
+      if (response.status >= 400) throw dataServer;
       return dataServer;
     } catch (e) {
-      return e;
+      throw e;
     }
   }
-  async patch(route) {
+  async patch(route, data) {
     try {
       const response = await fetch(`${urlServer}/${route}/`, {
         method: 'PATCH',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
+          Authorization: `Bearer ${getCookie('token')}`,
         },
+        body: JSON.stringify(data),
       });
       const dataServer = await response.json();
-      if (response.status >= 300) throw dataServer;
+      if (response.status === 401) throw { status: 401, error: 'Session expired, please re-login to your account' };
+      if (response.status >= 400) throw dataServer;
       return dataServer;
     } catch (e) {
-      return e;
+      throw e;
     }
   }
 }

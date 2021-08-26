@@ -1,4 +1,5 @@
 import * as types from './constants';
+import { deleteCookie, setCookie } from '../../helpers/utils';
 
 const initialState = {
   username: '',
@@ -19,6 +20,7 @@ export const userReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case types.GET_USER_SUCCESS:
+      setCookie('token', action.payload.token);
       return {
         ...state,
         username: action.payload.user.username,
@@ -27,13 +29,13 @@ export const userReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case types.GET_USER_ERROR:
-      localStorage.removeItem('token');
+      deleteCookie('token');
       return {
         ...state,
         isLoading: false,
       };
     case types.LOGIN_USER_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+      setCookie('token', action.payload.token);
       return {
         ...state,
         username: action.payload.user.username,
@@ -78,7 +80,7 @@ export const userReducer = (state = initialState, action) => {
         },
       };
     case types.LOGOUT_USER:
-      localStorage.removeItem('token');
+      deleteCookie('token');
       return {
         ...initialState,
         isLoading: false,

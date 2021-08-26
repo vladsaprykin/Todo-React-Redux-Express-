@@ -24,14 +24,13 @@ exports.get_user = async (req, res, next) => {
     return res.json({
       token,
       user: {
-        _id: user.id,
         email: user.email,
         username: user.username,
       },
     });
   } catch (e) {
     console.log(e);
-    res.send({ error: "Server error" });
+    res.status(500).send({ error: "Server error" });
   }
 };
 exports.add_user = async (req, res, next) => {
@@ -41,11 +40,13 @@ exports.add_user = async (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
   const passwordToSave = bcrypt.hashSync(passwordFromUser, salt);
   const filterUserName = await User.find({ username: username }).exec();
-  if (filterUserName.length)
+  if (filterUserName.length) {
     return res.status(400).send({ error: "This username is already used" });
+  }
   const filterMail = await User.find({ email: email }).exec();
-  if (filterMail.length)
+  if (filterMail.length) {
     return res.status(400).send({ error: "This email is already used" });
+  }
   const user = new User({
     username,
     email,
@@ -56,7 +57,7 @@ exports.add_user = async (req, res, next) => {
     res.send({ done: "add user" });
   } catch (e) {
     console.log(e);
-    res.send({ error: "Server error" });
+    res.status(500).send({ error: "Server error" });
   }
 };
 exports.get_user_token = async (req, res, next) => {
@@ -68,13 +69,12 @@ exports.get_user_token = async (req, res, next) => {
     return res.json({
       token,
       user: {
-        _id: user._id,
         email: user.email,
         username: user.username,
       },
     });
   } catch (e) {
     console.log(e);
-    res.send({ error: "Server error" });
+    res.status(500).send({ error: "Server error" });
   }
 };
