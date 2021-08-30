@@ -81,8 +81,10 @@ exports.get_user_token = async (req, res, next) => {
 exports.delete_user = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    await Task.deleteMany({ user_id: userId });
-    await User.deleteOne({ _id: userId });
+    User.findOne({ _id: userId }, function (err, user) {
+      if (err) throw err;
+      user.remove();
+    });
     res.send({ message: "Delete user" });
   } catch (e) {
     console.log(e);
