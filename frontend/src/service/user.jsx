@@ -1,7 +1,7 @@
 import API from './ApiService';
 
-export const getUserService = async (token) => {
-  const data = await API.get('users/auth', { token: token });
+export const getUserService = async () => {
+  const data = await API.get('users/auth');
   return data;
 };
 export const loginUserService = async (dataUser) => {
@@ -10,5 +10,9 @@ export const loginUserService = async (dataUser) => {
 };
 export const createUserService = async (dataUser) => {
   const data = await API.post('users/create', dataUser);
+  return data;
+};
+export const deleteUserService = async () => {
+  const data = await API.get('users/delete');
   return data;
 };

@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../redux/user/action';
-import { getCookie } from '../../helpers/utils';
 
 function PrivateRoute({ children, ...rest }) {
   const { authenticated, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUser(getCookie('token')));
+    dispatch(getUser());
   }, []);
   if (isLoading)
     return (

@@ -1,5 +1,6 @@
 import * as types from './constants';
 import {
+  changeTaskService,
   completeAllTasksService,
   createTaskService,
   deleteCompletedTasksService,
@@ -159,6 +160,33 @@ export const deleteCompletedTasks = () => async (dispatch) => {
     }
     return dispatch({
       type: types.DELETE_COMPLETED_TASKS_ERROR,
+      payload: e,
+    });
+  }
+};
+export const changeTask = (id, todo) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.CHANGE_TASK_START,
+    });
+    const data = await changeTaskService(id, todo);
+    return dispatch({
+      type: types.CHANGE_TASK_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    if (e.status === 401) {
+      dispatch({
+        type: LOGOUT_USER,
+      });
+      return dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: e,
+      });
+    }
+    console.log(e);
+    return dispatch({
+      type: types.CHANGE_TASK_ERROR,
       payload: e,
     });
   }

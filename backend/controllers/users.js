@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Task = require("../models/task");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const configJwt = require("../config/jwtConfig");
@@ -73,6 +74,16 @@ exports.get_user_token = async (req, res, next) => {
         username: user.username,
       },
     });
+  } catch (e) {
+    res.status(500).send({ error: "Server error" });
+  }
+};
+exports.delete_user = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    await Task.deleteMany({ user_id: userId });
+    await User.deleteOne({ _id: userId });
+    res.send({ message: "Delete user" });
   } catch (e) {
     console.log(e);
     res.status(500).send({ error: "Server error" });

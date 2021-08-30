@@ -10,7 +10,7 @@ const dbConfig = require("./config/db");
 const mongoose = require("mongoose");
 const authMiddleware = require("./middleWare/auth.middleware");
 
-var app = express();
+let app = express();
 app.use(cors());
 // Set up mongoose connection
 mongoose.connect(dbConfig.url, {
@@ -18,7 +18,7 @@ mongoose.connect(dbConfig.url, {
   useFindAndModify: false,
 });
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connsection error:"));
 
 // view engine setup

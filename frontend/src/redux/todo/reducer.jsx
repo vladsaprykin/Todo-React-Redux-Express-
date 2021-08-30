@@ -19,6 +19,14 @@ export const tasksReducer = (state = initialState, action) => {
           return item;
         }),
       };
+    case types.CHANGE_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: state.tasks.map((item) => {
+          if (action.payload._id === item._id) item.todo = action.payload.todo;
+          return item;
+        }),
+      };
     case types.DELETE_TASK_SUCCESS:
       return {
         ...state,

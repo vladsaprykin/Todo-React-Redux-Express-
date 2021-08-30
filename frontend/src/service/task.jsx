@@ -24,3 +24,7 @@ export const deleteCompletedTasksService = async () => {
   const data = await API.delete(`tasks/bulk_delete`);
   return data;
 };
+export const changeTaskService = async (id, todo) => {
+  const data = await API.put(`tasks/${id}`, todo);
+  return data;
+};

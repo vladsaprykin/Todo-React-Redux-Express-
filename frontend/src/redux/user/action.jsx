@@ -1,5 +1,5 @@
 import * as types from './constants';
-import { createUserService, getUserService, loginUserService } from '../../service/user';
+import { createUserService, deleteUserService, getUserService, loginUserService } from '../../service/user';
 
 export const logOutUser = () => {
   return {
@@ -11,12 +11,12 @@ export const removeErrorRequest = () => {
     type: types.REMOVE_ERROR_REQUEST,
   };
 };
-export const getUser = (token) => async (dispatch) => {
+export const getUser = () => async (dispatch) => {
   try {
     dispatch({
       type: types.GET_USER_START,
     });
-    const data = await getUserService(token);
+    const data = await getUserService();
     return dispatch({
       type: types.GET_USER_SUCCESS,
       payload: data,
@@ -59,6 +59,27 @@ export const createUser = (dataUser) => {
     } catch (e) {
       return dispatch({
         type: types.CREATE_USER_ERROR,
+        payload: e,
+      });
+    }
+  };
+};
+export const deleteUser = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: types.DELETE_USER_START,
+      });
+      await deleteUserService();
+      dispatch({
+        type: types.LOGOUT_USER,
+      });
+      return dispatch({
+        type: types.DELETE_USER_SUCCESS,
+      });
+    } catch (e) {
+      return dispatch({
+        type: types.DELETE_USER_ERROR,
         payload: e,
       });
     }

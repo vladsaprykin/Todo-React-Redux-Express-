@@ -1,21 +1,16 @@
 const jwt = require("jsonwebtoken");
 const configJwt = require("../config/jwtConfig");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   if (req.method === "OPTIONS") {
     return next();
   }
   try {
     const token = req.headers.authorization.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ message: "Auth error" });
+    if (token === "undefined" || !token) {
+      return res.status(401).json({ message: "Missing token" });
     }
-    let decoded;
-    try {
-      decoded = jwt.verify(token, configJwt.secretKey);
-    } catch (e) {
-      return res.status(401).json({ message: "Auth error" });
-    }
+    const decoded = await jwt.verify(token, configJwt.secretKey);
     req.user = decoded;
     next();
   } catch (e) {
