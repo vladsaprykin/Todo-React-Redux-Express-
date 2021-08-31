@@ -43,9 +43,9 @@ exports.task_update = async (req, res, next) => {
 exports.task_delete = async (req, res, next) => {
   try {
     const result = await Task.findByIdAndRemove(req.params.id).exec();
-    res.send(result);
+    res.send({ _id: result._id });
   } catch (e) {
-    res.status(401).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error" });
   }
 };
 exports.tasks_setCompleted = async (req, res, next) => {

@@ -8,14 +8,37 @@ import styles from './.module.css';
 const TodoItem = ({ task }) => {
   const dispatch = useDispatch();
 
-  const animationDelete = (e) => {
-    const task = e.target.parentElement;
-    task.style.height = '50px';
+  const animationDelete = (taskBlock) => {
+    let opacity = 1;
+    const timerId = setInterval(() => {
+      opacity -= 0.01;
+      taskBlock.style.opacity = opacity + '';
+    }, 5);
+    setTimeout(() => {
+      clearInterval(timerId);
+    }, 500);
   };
+  // const animationDelete = (e) => {
+  //   const task = e.target.tagName === 'path' ? e.target.parentElement.parentElement : e.target.parentElement;
+  //   let width = 5;
+  //   task.style.setProperty('--selection-height', task.clientHeight + 'px');
+  //   let timerId = setInterval(() => {
+  //     width += 5;
+  //     task.style.setProperty('--selection-width', width + 'px');
+  //   }, 22.5);
+  //   setTimeout(() => {
+  //     clearInterval(timerId);
+  //   }, 2000);
+  // };
   const handleDeleteTask = async (e) => {
-    const result = await dispatch(deleteTask(task._id));
-    if (result.type === 'TASK/DELETE_TASK_SUCCESS') animationDelete(e);
-    //todo Доделать анимацию удаления таска
+    const taskBlock = e.target.tagName === 'path' ? e.target.parentElement.parentElement : e.target.parentElement;
+    animationDelete(taskBlock);
+    await setTimeout(async () => {
+      const result = await dispatch(deleteTask(task._id));
+      if (result.type === 'TASK/DELETE_TASK_ERROR') {
+        taskBlock.style.opacity = '1';
+      }
+    }, 500);
   };
   const [openTextArea, setOpenTextArea] = useState(false);
   const [textAreaText, seTextAreaText] = useState('');

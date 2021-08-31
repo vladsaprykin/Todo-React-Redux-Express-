@@ -7,7 +7,7 @@ function PrivateRoute({ children, ...rest }) {
   const { authenticated, isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUser());
+    if (!authenticated) dispatch(getUser());
   }, []);
   if (isLoading)
     return (

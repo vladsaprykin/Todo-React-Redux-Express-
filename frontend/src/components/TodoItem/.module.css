@@ -6,6 +6,7 @@
   min-height: 50px;
   border-bottom: inset 1px #e4e2e4;
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
@@ -34,5 +35,17 @@
   margin: 0 5px;
   color: #6d6c6d;
 }
-
-
+.todo__item:after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  width: var(--selection-width);
+  height: var(--selection-height);
+  background: rgb(123, 34, 195);
+  background: linear-gradient(0deg, rgba(123, 34, 195, 1) 0%, rgba(45, 253, 79, 1) 100%);
+}
+:root {
+  --selection-width: 0px;
+  --selection-height: 0px;
+}
