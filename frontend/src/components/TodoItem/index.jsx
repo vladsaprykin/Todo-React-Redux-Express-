@@ -7,7 +7,6 @@ import styles from './.module.css';
 
 const TodoItem = ({ task }) => {
   const dispatch = useDispatch();
-
   const animationDelete = (taskBlock) => {
     let opacity = 1;
     const timerId = setInterval(() => {
@@ -18,18 +17,6 @@ const TodoItem = ({ task }) => {
       clearInterval(timerId);
     }, 500);
   };
-  // const animationDelete = (e) => {
-  //   const task = e.target.tagName === 'path' ? e.target.parentElement.parentElement : e.target.parentElement;
-  //   let width = 5;
-  //   task.style.setProperty('--selection-height', task.clientHeight + 'px');
-  //   let timerId = setInterval(() => {
-  //     width += 5;
-  //     task.style.setProperty('--selection-width', width + 'px');
-  //   }, 22.5);
-  //   setTimeout(() => {
-  //     clearInterval(timerId);
-  //   }, 2000);
-  // };
   const handleDeleteTask = async (e) => {
     const taskBlock = e.target.tagName === 'path' ? e.target.parentElement.parentElement : e.target.parentElement;
     animationDelete(taskBlock);
@@ -40,35 +27,35 @@ const TodoItem = ({ task }) => {
       }
     }, 500);
   };
-  const [openTextArea, setOpenTextArea] = useState(false);
-  const [textAreaText, seTextAreaText] = useState('');
+  const [openInput, setOpenInput] = useState(false);
+  const [inputText, setInputText] = useState('');
   const openEditor = (e) => {
     if (task.isCompleted) return;
     e.preventDefault();
-    setOpenTextArea(true);
-    seTextAreaText(task.todo);
+    setOpenInput(true);
+    setInputText(task.todo);
   };
   const handleChange = (e) => {
-    seTextAreaText(e.target.value);
+    setInputText(e.target.value);
   };
   const handleEnter = (event) => {
     if (event.keyCode === 13) {
-      dispatch(changeTask(task._id, { todo: textAreaText }));
-      setOpenTextArea(false);
+      dispatch(changeTask(task._id, { todo: inputText }));
+      setOpenInput(false);
     }
     if (event.keyCode === 27) {
-      setOpenTextArea(false);
+      setOpenInput(false);
     }
   };
   return (
     <div className={styles['todo__item']}>
       <TodoCustomCheckBox task={task} />
-      {!openTextArea ? (
+      {!openInput ? (
         <div className={styles['todo__item__text']} onClick={(e) => openEditor(e)}>
           {task.todo}
         </div>
       ) : (
-        <input type="text" value={textAreaText} onChange={handleChange} onKeyDown={handleEnter} />
+        <input type="text" value={inputText} onChange={handleChange} onKeyDown={handleEnter} />
       )}
 
       <BsFillTrashFill color="#c6c4c6" onClick={(e) => handleDeleteTask(e)} cursor="pointer" />

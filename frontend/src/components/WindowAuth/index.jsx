@@ -7,7 +7,6 @@ import { Button, Modal } from 'react-bootstrap';
 const WindowAuth = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const user = useSelector((state) => state.user);
